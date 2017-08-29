@@ -49,7 +49,6 @@ if sy-subrc eq 0.
 *  append lt_ftab.
 
 *select (lt_ftab)
-
   select *
    up to 100 rows
     from (tabname)
