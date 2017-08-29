@@ -7,10 +7,10 @@ data:
   ls_component    type abap_compdescr,
   ls_fieldcatalog type lvc_s_fcat,
   lt_fieldcatalog type lvc_t_fcat,
-  ref_str       type ref to data,
-  ref_tab       type ref to data,
-  ls_ftab(72)   type c,
-  lt_ftab       like table of ls_ftab with header line.
+  ref_str         type ref to data,
+  ref_tab         type ref to data,
+  ls_ftab(72)     type c,
+  lt_ftab         like table of ls_ftab with header line.
 
 field-symbols:
   <line>  type any,
