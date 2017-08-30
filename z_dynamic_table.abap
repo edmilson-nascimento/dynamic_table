@@ -2,7 +2,7 @@ REPORT z_dynamic_table.
 
 data:
   ref_table_des   type ref to cl_abap_structdescr,
-  tabname         type ddobjname value 't301',
+  tabname         type ddobjname value 'T301',
   lt_components   type abap_compdescr_tab,
   ls_component    type abap_compdescr,
   ls_fieldcatalog type lvc_s_fcat,
