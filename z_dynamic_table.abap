@@ -36,12 +36,12 @@ endloop.
 
 call method cl_alv_table_create=>create_dynamic_table
   exporting
-*    i_style_table             =
+*   i_style_table             =
     it_fieldcatalog           = lt_fieldcatalog
-*    i_length_in_byte          =
+*   i_length_in_byte          =
   importing
     ep_table                  = ref_tab
-*    e_style_fname             =
+*   e_style_fname             =
   exceptions
     generate_subpool_dir_full = 1
     others                    = 2 .
@@ -49,10 +49,6 @@ call method cl_alv_table_create=>create_dynamic_table
 if sy-subrc eq 0.
 
   assign ref_tab->* to <table> .
-
-*  para o caso de varios campos serem listados
-*  lt_ftab = lv_fieldname.
-*  append lt_ftab.
 
  select (lt_ftab)
    up to 100 rows
