@@ -2,15 +2,15 @@ REPORT z_dynamic_table.
 
 data:
   ref_table_des   type ref to cl_abap_structdescr,
-  tabname         type ddobjname value 'T301',
+  tabname         type ddobjname value 't301',
   lt_components   type abap_compdescr_tab,
   ls_component    type abap_compdescr,
   ls_fieldcatalog type lvc_s_fcat,
   lt_fieldcatalog type lvc_t_fcat,
   ref_str         type ref to data,
   ref_tab         type ref to data,
-  ls_ftab         type comt_codeline_tab,
-  lt_ftab         like table of ls_ftab with header line.
+  ls_ftab         type comt_codeline,
+  lt_ftab         type comt_codeline_tab.
 
 field-symbols:
   <line>  type any,
@@ -20,12 +20,18 @@ ref_table_des ?= cl_abap_typedescr=>describe_by_name( tabname ).
 lt_components = ref_table_des->components.
 
 loop at lt_components into ls_component.
+
   ls_fieldcatalog-fieldname = ls_component-name .
   ls_fieldcatalog-inttype   = ls_component-type_kind.
   ls_fieldcatalog-intlen    = ls_component-length + ls_component-decimals.
   ls_fieldcatalog-decimals  = ls_component-decimals.
   append ls_fieldcatalog to lt_fieldcatalog.
   clear  ls_fieldcatalog.
+
+  ls_ftab = ls_component-name .
+  append ls_ftab to lt_ftab .
+  clear  ls_ftab .
+
 endloop.
 
 call method cl_alv_table_create=>create_dynamic_table
@@ -36,10 +42,10 @@ call method cl_alv_table_create=>create_dynamic_table
   importing
     ep_table                  = ref_tab
 *    e_style_fname             =
-*  exceptions
-*    generate_subpool_dir_full = 1
-*    others                    = 2
-        .
+  exceptions
+    generate_subpool_dir_full = 1
+    others                    = 2 .
+
 if sy-subrc eq 0.
 
   assign ref_tab->* to <table> .
@@ -48,8 +54,7 @@ if sy-subrc eq 0.
 *  lt_ftab = lv_fieldname.
 *  append lt_ftab.
 
-*select (lt_ftab)
-  select *
+ select (lt_ftab)
    up to 100 rows
     from (tabname)
     into corresponding fields of
